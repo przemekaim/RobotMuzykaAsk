@@ -11,7 +11,6 @@ public class Bot {
     private final static Map<Integer, Point2D> coords = new HashMap<>();
 
     public static void main(String[] args) throws AWTException, InterruptedException {
-
         int x = 0;
         int y = 490;
 
@@ -56,20 +55,21 @@ public class Bot {
         }
     }
 
-    private static void chosenNotes() throws AWTException, InterruptedException {//
+    private static void chosenNotes() throws AWTException, InterruptedException {
+        Robot robot = new Robot();
         Scanner scanner = new Scanner(System.in);                               // 1 24 5 34 12 3 15 12 0 22
         System.out.println("Podaj input");
         String s = scanner.nextLine();
         Thread.sleep(1500);
         List<Integer> list =
-                Arrays.stream(s.split("\\s+")).map(Integer::parseInt).collect(Collectors.toList()); // fajny regex:
-                                    // This will cause any number of consecutive spaces to split your string into tokens.
+                Arrays.stream(s.split("\\s+"))
+                        .map(Integer::parseInt)
+                        .collect(Collectors.toList()); // fajny regex:
+        // This will cause any number of consecutive spaces to split your string into tokens.
 
-        Robot robot = new Robot();
-
-        for (int i = 0; i < list.size(); i++) {
-            if (coords.containsKey(list.get(i))) {
-                robot.mouseMove((int) coords.get(list.get(i)).getX(), (int) coords.get(list.get(i)).getY());
+        for (Integer integer : list) {
+            if (coords.containsKey(integer)) {
+                robot.mouseMove((int) coords.get(integer).getX(), (int) coords.get(integer).getY());
                 robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
                 robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
                 Thread.sleep(250);
